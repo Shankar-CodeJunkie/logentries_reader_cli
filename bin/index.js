@@ -1,15 +1,9 @@
-let fetchLogEntries = require('./lib/fetchLogEntries');
-let inquirer = require('inquirer')
-//console.log(process.args[1]);
+#!/usr/bin/env node
+let fetchLogEntries = require('../lib/fetchLogEntries');
+let inquirer = require('inquirer');
 
 
-/**
- * Function: Function to be called from command line to tail logs from logentries
- * @param logset
- * @param token
- * @param query
- */
-module.exports.liveTail = async function () {
+async function probeForInput(){
   let questions = {
     type: 'input',
     name: 'answer',
@@ -18,16 +12,35 @@ module.exports.liveTail = async function () {
   }
   let answer = await inquirer.prompt(questions);
   let logset = answer.answer;
-  questions.message = `Provide the token value for that specific logset that you like to query`;
+  questions.message = `Provide your logentries token`;
   let answer1  = await inquirer.prompt(questions);
   let token = answer1.answer;
-  let logEntriesURL = new URL(`https://rest.logentries.com/query/live/logs/${logset}`)
-  let params;
-  if (typeof(query) != 'undefined') {
-    console.log('wfjoiwe')
-    params = {query:`where(${query})`}
-    logEntriesURL.search = new URLSearchParams(params).toString();
+  questions.message = `Do you like to search the logsets for any specific search string `
+  questions.type = 'confirm'
+  let answer2 = await inquirer.prompt(questions);
+
+  if (answer2 == 'true') {
+    questions.type = 'input';
+    questions.message = "Provide your search string"
+    let answer3 = await inquirer.prompt(questions);
+    searchForText(answer3, logset, token);
+  } else {
+    console.log('No Search entry supplied. ')
+    liveTail(logset, token)
   }
+}
+
+
+
+/**
+ * Function: Function to be called from command line to tail logs from logentries
+ * @param logset
+ * @param token
+ * @param query
+ */
+function liveTail (logset, token) {
+  console.log('Connecting to logentries.com. Please wait..')
+  let logEntriesURL = new URL(`https://rest.logentries.com/query/live/logs/${logset}`);
 
   let options = {
     url: logEntriesURL,
@@ -41,21 +54,8 @@ module.exports.liveTail = async function () {
 }
 
 
-module.exports.SearchForText = async function () {
-  let questions = {
-    type: 'input',
-    name: 'answer',
-    message: 'Provide the logset value that would like to query',
-    default: '1'
-  }
-  let answer = await inquirer.prompt(questions);
-  let logset = answer.answer;
-  questions.message = `Provide the token value for that specific logset that you like to query`;
-  let answer1  = await inquirer.prompt(questions);
-  let token = answer1.answer;
-  questions.message = `What is the search text that you would like to tail`;
-  let answer3 = await inquirer.prompt(questions);
-  let query = answer1.answer;
+function searchForText(query, logset, token) {
+
   let logEntriesURL = new URL(`https://rest.logentries.com/query/live/logs/${logset}`)
   let params;
   if (typeof(query) != 'undefined') {
@@ -115,6 +115,10 @@ function retry_link(url, params, inititalurl) {
           }
         })
   })
+}
+
+module.exports = {
+  liveTail: probeForInput()
 }
 
 

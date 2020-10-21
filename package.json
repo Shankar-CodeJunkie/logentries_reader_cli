@@ -1,8 +1,8 @@
 {
   "name": "logentries_reader_cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Module to live tail the logentries log records",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run": "node -e 'require(\"./index.js\").SearchForText()'"
@@ -15,7 +15,7 @@
     "yargs": "^16.0.3"
   },
   "bin": {
-    "logentries-reader": "index.js"
+    "logentries-reader": "bin/index.js"
   },
   "repository": {
     "type": "git",

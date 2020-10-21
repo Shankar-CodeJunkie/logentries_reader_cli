@@ -10,5 +10,10 @@ in a single API call.
 #### How to initialize the module ?
 
 ```angular2
-logentries_reader_cli 
+logentries-reader liveTail
 ```
+
+```angular2
+![](https://github.com/Shankar-IBM-ISL-Developer/logentries_reader_cli/blob/master/image.png)
+```
+
