@@ -1,6 +1,7 @@
-Query logentries.com via their REST API. We have to make two different requests to 
-retrieve log messages from logentries. This module will help you to retreive the logs
-in a single API call.
+```
+Command-line tool to stream logs from Logentries
+```
+This CLI tool helps you to query live logs from the command line and also search for a specific text on logentries.com.  The logentries portal has a start live tail button, however the browser update on the DOM was a bit slower than streaming on the command line. 
 
 ## Installation: 
 ```npm install -g logentries_reader_cli```
