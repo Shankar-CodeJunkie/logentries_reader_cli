@@ -1,6 +1,6 @@
 {
   "name": "logentries_reader_cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Module to live tail the logentries log records",
   "main": "bin/index.js",
   "scripts": {
