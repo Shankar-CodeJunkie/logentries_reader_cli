@@ -13,7 +13,7 @@ in a single API call.
 logentries-reader liveTail
 ```
 
-```angular2
+
 ![](https://github.com/Shankar-IBM-ISL-Developer/logentries_reader_cli/blob/master/image.png)
-```
+
 
